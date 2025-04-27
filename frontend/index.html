@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Control</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="category-cards">
+        <!-- Tarjeta de Comida -->
+        <div class="category-card" style="background-image: url('../assets/gif_categoria1.gif');">
+            <div class="overlay"></div>  <!-- Máscara difuminada -->
+            <div class="category-info">
+                <h3>Comida</h3>
+                <p>Presupuesto: $500</p>
+                <p>Descripción: Controla tus gastos en comida.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="expense-form" class="expense-form-popup">
+        <div class="gif-background" style="background-image: url('../assets/gif_categoria1.gif');">
+            <div class="overlay"></div>
+            <form id="expense-form-container">
+                <label>Categoría</label>
+                <input type="text" name="category" required>
+                <label>Monto</label>
+                <input type="number" name="amount" required>
+                <label>Fecha</label>
+                <input type="date" name="date" required>
+                <label>Descripción</label>
+                <textarea name="description"></textarea>
+                <button type="submit">Guardar</button>
+                <button type="button" class="close-popup">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

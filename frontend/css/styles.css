@@ -1,0 +1,79 @@
+/* Estilo general para la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para las tarjetas de categoría */
+.category-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.category-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.category-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.category-card .category-info {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    color: white;
+}
+
+.category-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.category-card p {
+    font-size: 14px;
+}
+
+/* Estilo para el formulario emergente */
+.gif-background {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.gif-background .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+form {
+    position: relative;
+    z-index: 10;
+    color: #fff;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
