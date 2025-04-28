@@ -1,4 +1,8 @@
- <Directory "/ruta/a/gasto-control/frontend/css">
+ <Directory "/www/wwwroot/gastoscontrol/frontend/css">
+    AllowOverride All
+    Require all granted
+</Directory>
+<Directory "/www/wwwroot/gastoscontrol/assets/js">
     AllowOverride All
     Require all granted
 </Directory>
