@@ -3,40 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gasto Control</title>
+    <title>Dashboard - Gasto Control</title>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <div class="category-cards">
-        <!-- Tarjeta de Comida -->
-        <div class="category-card" style="background-image: url('../assets/gif_categoria1.gif');">
-            <div class="overlay"></div>  <!-- Máscara difuminada -->
-            <div class="category-info">
-                <h3>Comida</h3>
-                <p>Presupuesto: $500</p>
-                <p>Descripción: Controla tus gastos en comida.</p>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="add_expense.html">Añadir gasto</a></li>
+            <li><a href="logout.php">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor del dashboard -->
+    <div class="dashboard-container">
+        <h1>Bienvenido a tu Dashboard</h1>
+
+        <!-- Información general -->
+        <div class="dashboard-overview">
+            <div class="card">
+                <h2>Gastos Totales</h2>
+                <p id="total-gastos">Cargando...</p>
+            </div>
+            <div class="card">
+                <h2>Presupuesto Total</h2>
+                <p id="total-presupuesto">Cargando...</p>
             </div>
         </div>
-    </div>
 
-    <div id="expense-form" class="expense-form-popup">
-        <div class="gif-background" style="background-image: url('../assets/gif_categoria1.gif');">
-            <div class="overlay"></div>
-            <form id="expense-form-container">
-                <label>Categoría</label>
-                <input type="text" name="category" required>
-                <label>Monto</label>
-                <input type="number" name="amount" required>
-                <label>Fecha</label>
-                <input type="date" name="date" required>
-                <label>Descripción</label>
-                <textarea name="description"></textarea>
-                <button type="submit">Guardar</button>
-                <button type="button" class="close-popup">Cancelar</button>
-            </form>
+        <!-- Gráfico de gastos por categoría -->
+        <div class="category-chart">
+            <h2>Gastos por Categoría</h2>
+            <div id="category-chart-container">Cargando gráfico...</div>
         </div>
     </div>
 
-    <script src="assets/js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('backend/dashboard.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar los datos de gastos
+                    const totalGastos = data.gastos.reduce((sum, gasto) => sum + parseFloat(gasto.total_gasto), 0);
+                    const totalPresupuesto = data.presupuesto.reduce((sum, presupuesto) => sum + parseFloat(presupuesto.budget), 0);
+
+                    document.getElementById('total-gastos').textContent = '$' + totalGastos.toFixed(2);
+                    document.getElementById('total-presupuesto').textContent = '$' + totalPresupuesto.toFixed(2);
+
+                    // Graficar los gastos por categoría
+                    const categories = data.gastos.map(gasto => gasto.category);
+                    const expenses = data.gastos.map(gasto => gasto.total_gasto);
+                    const budget = data.presupuesto.map(pres => pres.budget);
+
+                    const ctx = document.getElementById('category-chart-container').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: categories,
+                            datasets: [{
+                                label: 'Gastos',
+                                data: expenses,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }, {
+                                label: 'Presupuesto',
+                                data: budget,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error('Error al cargar datos del dashboard:', err));
+        });
+    </script>
 </body>
 </html>
