@@ -2,6 +2,9 @@
 session_start();
 require_once 'router.php';
 
+// Define or include the $routes variable
+$routes = include 'routes.php'; // Ensure 'routes.php' returns an array of routes
+
 
 
 // Check if user is logged in
