@@ -7,24 +7,25 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include('db.php');
+require_once 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $category = $_POST['category'];
-    $amount = $_POST['amount'];
-    $description = $_POST['description'];
-    $date = $_POST['date'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $category = htmlspecialchars($_POST['category']);
+    $amount = filter_var($_POST['amount'], FILTER_VALIDATE_FLOAT);
+    $description = htmlspecialchars($_POST['description']);
+    $date = htmlspecialchars($_POST['date']);
 
-    // Insertar el gasto en la base de datos
-    $sql = "INSERT INTO gastos (categoria_id, monto, descripcion, fecha) 
-            VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idss", $category, $amount, $description, $date);
-
-    if ($stmt->execute()) {
-        echo "Gasto agregado exitosamente";
+    if ($amount > 0) {
+        $stmt = $pdo->prepare("INSERT INTO gastos (categoria_id, monto, descripcion, fecha) VALUES (:category, :amount, :description, :date)");
+        $stmt->execute([
+            'category' => $category,
+            'amount' => $amount,
+            'description' => $description,
+            'date' => $date
+        ]);
+        echo "Gasto agregado exitosamente.";
     } else {
-        echo "Error al agregar el gasto: " . $stmt->error;
+        echo "El monto debe ser mayor a 0.";
     }
 }
 

@@ -9,24 +9,20 @@
 <body>
     <div class="expense-form-container">
         <h2>Agregar Gasto</h2>
-        <form action="backend/add_expense.php" method="POST">
+        <form action="/api/add-expense" method="POST">
             <label for="category">Categoría</label>
-            <select name="category" id="category" required>
+            <select id="category" name="category">
                 <option value="1">Comida</option>
                 <option value="2">Transporte</option>
-                <!-- Agregar más categorías según lo necesites -->
+                <option value="3">Entretenimiento</option>
             </select>
-            
             <label for="amount">Monto</label>
-            <input type="number" name="amount" id="amount" required>
-            
-            <label for="description">Descripción</label>
-            <textarea name="description" id="description" required></textarea>
-            
+            <input type="number" id="amount" name="amount" required>
             <label for="date">Fecha</label>
-            <input type="date" name="date" id="date" required>
-            
-            <button type="submit">Agregar</button>
+            <input type="date" id="date" name="date" required>
+            <label for="description">Descripción</label>
+            <textarea id="description" name="description"></textarea>
+            <button type="submit">Agregar Gasto</button>
         </form>
     </div>
 </body>
