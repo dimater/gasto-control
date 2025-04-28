@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Gasto - Gasto Control</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="expense-form-container">
+        <h2>Agregar Gasto</h2>
+        <form action="backend/add_expense.php" method="POST">
+            <label for="category">Categoría</label>
+            <select name="category" id="category" required>
+                <option value="1">Comida</option>
+                <option value="2">Transporte</option>
+                <!-- Agregar más categorías según lo necesites -->
+            </select>
+            
+            <label for="amount">Monto</label>
+            <input type="number" name="amount" id="amount" required>
+            
+            <label for="description">Descripción</label>
+            <textarea name="description" id="description" required></textarea>
+            
+            <label for="date">Fecha</label>
+            <input type="date" name="date" id="date" required>
+            
+            <button type="submit">Agregar</button>
+        </form>
+    </div>
+</body>
+</html>
