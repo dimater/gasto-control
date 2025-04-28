@@ -9,13 +9,20 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Obtener datos de los gastos
-$query = "SELECT category, SUM(amount) AS total_gasto FROM expenses WHERE user_id = ? GROUP BY category";
+$query = "SELECT c.name AS categoria, SUM(e.amount) AS total_gasto 
+          FROM expenses e 
+          INNER JOIN categories c ON e.category_id = c.id 
+          WHERE e.user_id = ? 
+          GROUP BY c.name";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$_SESSION['user_id']]);
 $gastos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Obtener el presupuesto total
-$query = "SELECT category, budget FROM budgets WHERE user_id = ?";
+$query = "SELECT c.name AS categoria, b.budget 
+          FROM budgets b 
+          INNER JOIN categories c ON b.category_id = c.id 
+          WHERE b.user_id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$_SESSION['user_id']]);
 $presupuesto = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,7 +33,5 @@ $data = [
     'presupuesto' => $presupuesto
 ];
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // Permitir acceso desde cualquier origen
 
 echo json_encode($data); // Enviar los datos al frontend
