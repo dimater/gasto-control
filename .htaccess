@@ -1,0 +1,4 @@
+ <Directory "/ruta/a/gasto-control/frontend/css">
+    AllowOverride All
+    Require all granted
+</Directory>
