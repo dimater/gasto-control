@@ -1,23 +1,16 @@
-name: Deploy to FTP
-
-on:
-  push:
-    branches:
-      - master  # El flujo de trabajo se activará en cada push a la rama 'master'
-
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # Utiliza un contenedor de Ubuntu en GitHub Actions
-
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2  # Clona el código del repositorio en el entorno de trabajo
-
-      - name: Set up FTP deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4  # Acción que sube el código a un servidor FTP
-        with:
-          ftp-server: 'ftp://146.190.117.241'  # Dirección del servidor FTP
-          ftp-username: ${{ secrets.FTP_USERNAME }}  # Nombre de usuario FTP (guardado en secrets)
-          ftp-password: ${{ secrets.FTP_PASSWORD }}  # Contraseña FTP (guardada en secrets)
-          local-dir: './'  # Directorio local que se enviará al servidor (puedes cambiar según tus necesidades)
-          server-dir: '/'  # Directorio en el servidor donde se subirá el código
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: 146.190.117.241
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}  
