@@ -26,4 +26,7 @@ $data = [
     'presupuesto' => $presupuesto
 ];
 
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *'); // Permitir acceso desde cualquier origen
+
 echo json_encode($data); // Enviar los datos al frontend
